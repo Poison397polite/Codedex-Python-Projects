@@ -45,45 +45,26 @@ while True: # Game loop to keep playing until you no longer want to
     print("3 - Scissors")
 
     choice = int(input("Your choice: ")) # Gets users choice
-
     if choice != 1 and choice != 2 and choice != 3: # Makes sure user entered valid input
         print("\nInvalid input")
         continue
 
     computerChoice = random.randint(1, 3) # Gets CPU choice
 
-    # Checks every possibility to find Tie or the winner
+    # Checks every possibility to find if the game was a tie or the winner
     if choice == computerChoice:
         print(f"You chose:\n{rpsHands[choice]}\n")
         print(f"The CPU chose:\n{rpsHands[computerChoice]}\n")
         print("It is a tie try again!")
         continue
-    elif choice == 1 and computerChoice == 2:
-        print(f"You chose:\n{rpsHands[choice]}\n")
-        print(f"The CPU chose:\n{rpsHands[computerChoice]}\n")
-        print("You lose!")
-    elif choice == 1 and computerChoice == 3:
-        print(f"You chose:\n{rpsHands[choice]}\n")
-        print(f"The CPU chose:\n{rpsHands[computerChoice]}\n")
-        print("You win!")
-    elif choice == 2 and computerChoice == 1:
-        print(f"You chose:\n{rpsHands[choice]}\n")
-        print(f"The CPU chose:\n{rpsHands[computerChoice]}\n")
-        print("You win!")
-    elif choice == 2 and computerChoice == 3:
-        print(f"You chose:\n{rpsHands[choice]}\n")
-        print(f"The CPU chose:\n{rpsHands[computerChoice]}\n")
-        print("You lose!")
-    elif choice == 3 and computerChoice == 1:
-        print(f"You chose:\n{rpsHands[choice]}\n")
-        print(f"The CPU chose:\n{rpsHands[computerChoice]}\n")
-        print("You lose!")
-    elif choice == 3 and computerChoice == 2:
+    elif choice == 1 and computerChoice == 3 or choice == 2 and computerChoice == 1 or choice == 3 and computerChoice == 2:
         print(f"You chose:\n{rpsHands[choice]}\n")
         print(f"The CPU chose:\n{rpsHands[computerChoice]}\n")
         print("You win!")
     else:
-        print("Unknown Error")
+        print(f"You chose:\n{rpsHands[choice]}\n")
+        print(f"The CPU chose:\n{rpsHands[computerChoice]}\n")
+        print("You lose!")
 
     # Asks to keep playing for game loop
     if input("Do you want to play again? y for yes anything else for no: ").lower() != "y":
