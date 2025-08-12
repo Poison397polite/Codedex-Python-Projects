@@ -29,9 +29,13 @@ rpsHands = { # Dictionary of the art for Rock Paper Scissors
 """
 }
 
-# Prints title
+# Prints title and rules
 print("---------------------------------------------------")
 print("                Rock Paper Scissors                ")
+print("                      Rules:                       ")
+print("               Rock crushes Scissors               ")
+print("                Scissors cuts Paper                ")
+print("                 Paper covers Rock                 ")
 print("---------------------------------------------------")
 
 while True: # Game loop to keep playing until you no longer want to
