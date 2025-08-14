@@ -108,7 +108,7 @@ def printQuestionAndAnswers():
         print(f"c) {incorrectAnswers[i][2]}")
         print(f"d) {correctAnswers[i]}")
 
-def lifeline50():
+def lifeline5050():
     """Function to execute the 50 / 50 lifeline"""
     # Prints the question again and the answers with 2 incorrect answers removed
     if i in (2, 4, 6, 7, 9, 11):
@@ -131,7 +131,7 @@ def lifeline50():
     # Removes used lifeline from the list so it can only be used once
     lifelines.remove("50 / 50")
 
-def lifelineAsk():
+def lifelineAskTheAudience():
     """Function to execute the Ask the Audience lifeline"""
     audienceAnswer = []
     for i2 in range(1, 1000):
