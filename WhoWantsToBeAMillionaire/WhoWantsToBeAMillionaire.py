@@ -275,4 +275,9 @@ for i in range(1, 16):
     elif i == 15:
         print("You are now a millionaire!")
 
+if i > 10 and i < 15:
+    print("\nYou didn't make a million but you are going home with $32,000")
+elif i > 5 and i < 10:
+    print("\nYou didn't make a million but you are going home with $1,000")
+
 print("\nThanks for playing!")
