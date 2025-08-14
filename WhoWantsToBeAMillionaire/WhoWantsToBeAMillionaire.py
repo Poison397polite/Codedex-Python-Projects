@@ -244,11 +244,11 @@ for i in range(1, 16):
 
                 # Removes 2 incorrect answers for the 50 / 50 lifeline
                 if "50" in chosenLifeline and lifelines[0] == "50 / 50":
-                    lifeline50()
+                    lifeline5050()
 
                 # Gets a bunch of random numbers in favor of the correct answer for the Ask the Audience lifeline
                 elif "ask" in chosenLifeline.lower() and "ask" in lifelines[0].lower() or "ask" in chosenLifeline.lower() and "ask" in lifelines[1].lower():
-                    lifelineAsk()
+                    lifelineAskTheAudience()
 
                 # Has a "friend" answer the question giving the correct answer 4 / 5 times
                 elif "phone" in chosenLifeline.lower() and "phone" in lifelines[0].lower() or "phone" in chosenLifeline.lower() and "phone" in lifelines[1].lower() or "phone" in chosenLifeline.lower() and "phone" in lifelines[2].lower():
