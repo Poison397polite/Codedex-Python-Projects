@@ -2,77 +2,37 @@
 
 import random
 
-questions = { # Dictionary for all the questions in the game
-    1: "The Earth is approximately how many miles away from the Sun?",
-    2: "Which insect shorted out an early supercomputer and inspired the term \"computer bug\"?",
-    3: "Which of the following men does not have a chemical element named for him?",
-    4: "Which of the following landlocked countries is entirely contained within another country?",
-    5: "In the children's book series, where is Paddington Bear originally from?",
-    6: "Who is credited with inventing the first mass-produced helicopter?",
-    7: "What letter must appear at the beginning of the registration number of all non-military aircraft in the U.S.?",
-    8: "During WWII, U.S. soldiers used the first commercial aerosol cans to hold what?",
-    9: "The U.S. icon \"Uncle Sam\" was based on Samuel Wilson, who worked during the War of 1812 as a what?",
-    10: "Who did artist Grant Wood use as the model for the farmer in his classic painting \"American Gothic\"?",
-    11: "For ordering his favorite beverages on demand, LBJ had four buttons installed in the Oval Office labeled \"coffee,\" \"tea,\" \"Coke\" and what?",
-    12: "According to the Population Reference Bureau, what is the approximate number of people who have ever lived on earth?",
-    13: "In addition to his career as an astrologer and \"prophet,\" Nostradamus published a 1555 treatise that included a section on what?",
-    14: "Although he and his wife never touched a light switch for fear of being shocked, who was the first president to have electricity in the White House?",
-    15: "Which of these U.S. presidents appeared on the television series 'Laugh-In'?"
-}
+questions = {} # Dictionary of all the questions in the game
+# Fills the questions dictionary with the questions in Questions.txt
+# Each line number is the key and each lines text is the value
+with open("Questions.txt", "r", encoding = "utf8") as file:
+    for i, line in enumerate(file, start = 1):
+        questions[i] = line.strip() # strip() removes \n
 
-correctAnswers = { # Dictionary of all the correct answers
-    1: "93 million",
-    2: "Moth",
-    3: "Isaac Newton",
-    4: "Lesotho",
-    5: "Peru",
-    6: "Igor Sikorsky",
-    7: "N",
-    8: "Insecticide",
-    9: "Meat inspector",
-    10: "His dentist",
-    11: "Fresca",
-    12: "100 billion",
-    13: "Making jams and jellies",
-    14: "Benjamin Harrison",
-    15: "Richard Nixon"
-}
+correctAnswers = {} # Dictionary of all the correct answers
+# Fills the correctAnswers dictionary with the correct answers from CorrectAnswers.txt
+# Each line number is the key and each lines text is the value
+with open("CorrectAnswers.txt", "r", encoding = "utf8") as file:
+    for i, line in enumerate(file, start = 1):
+        correctAnswers[i] = line.strip() # strip() removes \n
 
-incorrectAnswers = { # Dictionary for all the incorrect answers
-    1: ["9.3 million", "39 million", "193 million"],
-    2: ["Roach", "Fly", "Japanese beetle"],
-    3: ["Albert Einstein", "Niels Bohr", "Enrico Fermi"],
-    4: ["Burkina Faso", "Mongolia", "Luxembourg"],
-    5: ["India", "Canada", "Iceland"],
-    6: ["Elmer Sparry", "Ferdinand von Zeppelin", "Gottlieb Daimler"],
-    7: ["A", "U", "L"],
-    8: ["Cleaning fluid", "Antiseptic", "Shaving cream"],
-    9: ["Mail deliverer", "Historian", "Weapons mechanic"],
-    10: ["Traveling salesman", "Local sheriff", "His butcher"],
-    11: ["V8", "Yoo-hoo", "A&W"],
-    12: ["50 billion", "1 trillion", "5 trillion"],
-    13: ["Training parrots to talk", "Cheating at card games", "Digging graves"],
-    14: ["Ulysses S. Grant", "Chester A. Arthur", "Andrew Johnson"],
-    15: ["Lyndon Johnson", "Jimmy Carter", "Gerald Ford"]
-}
+incorrectAnswers = {} # Dictionary of all the incorrect answers
+# Opens IncorrectAnswers.txt and stores every line in a list without the \n
+with open("IncorrectAnswers.txt", "r", encoding = "utf8") as file:
+    lines = [line.strip() for line in file] # remove \n
 
-questionCash = { # Dictionary for all the amounts of cash for questions
-    1: 100,
-    2: 200,
-    3: 300,
-    4: 500,
-    5: 1000,
-    6: 2000,
-    7: 4000,
-    8: 8000,
-    9: 16000,
-    10: 32000,
-    11: 64000,
-    12: 125000,
-    13: 250000,
-    14: 500000,
-    15: 1000000
-}
+# Loops through all the lines and fills the incorrectAnswers dictionary with a key from 1 to 15
+# and the value is a list of 3 lines each
+for i in range(0, len(lines), 3):
+    key = i // 3 + 1 # 1, 2, 3...
+    incorrectAnswers[key] = lines[i : i + 3]
+
+questionCash = {} # Dictionary for all the amounts of cash for questions
+ # Fills the questionCash dictionary with the numbers in QuestionCash.txt converted to an integer
+ # Each line number is the key
+with open("QuestionCash.txt", "r", encoding = "utf8") as file:
+    for i, line in enumerate(file, start = 1):
+        questionCash[i] = int(line.strip()) # strip removes \n, int() converts to integer
 
 lifelines = [ # A list of the available lifelines, they get removed when used
     "50 / 50",
@@ -133,6 +93,7 @@ def lifeline5050():
 
 def lifelineAskTheAudience():
     """Function to execute the Ask the Audience lifeline"""
+    # Gets input from the "audience" favored in the correct answer but can be wrong
     audienceAnswer = []
     for i2 in range(1, 1000):
         if i2 % 35 == 0:
@@ -164,6 +125,7 @@ def lifelineAskTheAudience():
 
 def lifelinePhoneAFriend():
     """Function to execute the Phone a Friend lifeline"""
+    # "Calls" a "friend" and gets an answer from them that is correct 4 out of 5 times
     friendAnswer = random.randint(1, 5)
     if friendAnswer in (1, 2, 3, 4):
         if i in (2, 4, 6, 7, 9, 11):
@@ -221,38 +183,53 @@ for i in range(1, 16):
     # Prints the questions and the answer choices
     printQuestionAndAnswers()
 
-    usedLifeline = False # Used to verify if a lifelife has already been used on the current question
+    # Used to verify if a lifelife has already been used on the current question
+    usedLifeline = False
 
-    while True: # Loop ensureing valid input as well as working with lifelines
+    # Loop ensureing valid input as well as working with lifelines
+    while True:
         answer = input("\nYour answer: ")
+
         # Checks input to ensure the input was valid
-        if answer.lower() != "a" and answer.lower() != "b" and answer.lower() != "c" and answer.lower() != "d" and answer.lower() != "lifeline":
+        if answer.lower() not in ("a", "b", "c", "d", "lifeline"):
             print("\nInvalid input try again!")
+
         # Displays available lifelines and applies the lifeline chosen
         elif answer.lower() == "lifeline":
             print()
+            # Checks if a lifeline has been used this question
+            # or if no lifelines are remaining before proceeding to lifelines
             if usedLifeline:
                 print("You already used a lifeline this question.")
+            elif len(lifelines) < 1:
+                print("You have no more lifelines!")
             else:
-                usedLifeline = True
-
+                # Prints available lifelines
                 for lifeline in lifelines:
                     print(f"{lifeline}")
 
                 chosenLifeline = input("\nChose what lifeline you want to use: ")
+                chosenLifeline = chosenLifeline.lower()
                 print()
 
-                # Removes 2 incorrect answers for the 50 / 50 lifeline
+                # Calls the lifeline5050 function and toggles usedLifeline to true
                 if "50" in chosenLifeline and lifelines[0] == "50 / 50":
                     lifeline5050()
+                    usedLifeline = True
 
-                # Gets a bunch of random numbers in favor of the correct answer for the Ask the Audience lifeline
-                elif "ask" in chosenLifeline.lower() and "ask" in lifelines[0].lower() or "ask" in chosenLifeline.lower() and "ask" in lifelines[1].lower():
+                # Calls the lifelineAskTheAudience function and toggles usedLifeline to true
+                elif "ask" in chosenLifeline and any("ask" in x.lower() for x in lifelines):
                     lifelineAskTheAudience()
+                    usedLifeline = True
 
-                # Has a "friend" answer the question giving the correct answer 4 / 5 times
-                elif "phone" in chosenLifeline.lower() and "phone" in lifelines[0].lower() or "phone" in chosenLifeline.lower() and "phone" in lifelines[1].lower() or "phone" in chosenLifeline.lower() and "phone" in lifelines[2].lower():
+                # Calls the lifelinePhoneAFriend function and toggles usedLifeline to true
+                elif "phone" in chosenLifeline and any("phone" in x.lower() for x in lifelines):
                     lifelinePhoneAFriend()
+                    usedLifeline = True
+
+                # Only activates if you entered an already used or non existant lifeline
+                else:
+                    print("Invalid input")
         else:
             break
 
@@ -270,14 +247,14 @@ for i in range(1, 16):
         break
 
     # Letting user know when they hit the safe havens and final message
-    if i == 5 or i == 10:
+    if i in (5, 10):
         print(f"You just locked in ${questionCash[i]:,}, you are now guaranteed that money!\n")
     elif i == 15:
         print("You are now a millionaire!")
 
-if i > 10 and i < 15:
+if i > 10 < 15:
     print("\nYou didn't make a million but you are going home with $32,000")
-elif i > 5 and i < 10:
+elif i > 5 < 10:
     print("\nYou didn't make a million but you are going home with $1,000")
 
 print("\nThanks for playing!")
