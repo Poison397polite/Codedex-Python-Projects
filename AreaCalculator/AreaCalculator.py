@@ -260,13 +260,15 @@ shapes = {
 printTitleAndShapes()
 
 while True:
-    shape = input("Enter the name of the shape: ").lower()
+    while True:
+        shape = input("Enter the name of the shape: ").lower()
 
-    if shape in shapes:
-        area = shapes[shape]()  # call the correct function
-        print(f"The area of the {shape} is {formatArea(area)}")
-    else:
-        print("Invalid input. Try again.")
+        if shape not in shapes:
+            print("Invalid input. Try again.")
+        else:
+            area = shapes[shape]()  # call the correct function
+            print(f"The area of the {shape} is {formatArea(area)}")
+            break
 
     if input("Another shape? (y/n): ").lower() != "y":
         break
