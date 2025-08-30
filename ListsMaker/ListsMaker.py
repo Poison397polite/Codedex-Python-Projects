@@ -82,10 +82,22 @@ class Lists:
         myList = self.lists.get(name)
 
         if myList:
-            print(f"\nOpening list: {name}!")
+            print(f"\nOpening list: {name}")
             self.listMenu(myList)
         else:
             print("\nInvalid name.")
+
+    def deleteList(self):
+        """Deletes a list"""
+        name = input("\nEnter the name of the list: ")
+        myList = self.lists.get(name)
+
+        if myList:
+            print(f"Deleting list: {name}")
+            self.lists.pop(name)
+            self.saveLists()
+        else:
+            print("\nList doesn't exist.")
 
     def listMenu(self, myList: List):
         """Function to interact with the List class"""
@@ -117,7 +129,8 @@ class Lists:
             print("\n===== Lists =====")
             print("1. Create a new list")
             print("2. Open an existing list")
-            print("3. Exit")
+            print("3. Delete an existing list")
+            print("4. Exit")
 
             choice = input("\nEnter your choice (1 - 3): ")
 
@@ -126,6 +139,8 @@ class Lists:
             elif choice == "2":
                 self.openExistingList()
             elif choice == "3":
+                self.deleteList()
+            elif choice == "4":
                 print("\nGoodbye!")
                 self.saveLists()
                 break
